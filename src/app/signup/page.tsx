@@ -1,76 +1,82 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import Link from "next/link";
+import { BorderBeam } from "@/app/ui/border-beam";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/app/ui/card";
+import { Button } from "@/app/ui/button";
+import { Input } from "@/app/ui/input";
+import { Label } from "@/app/ui/label";
 
 export default function SignupPage() {
-  const router = useRouter();
-  
-  const [user, setUser] = useState({
+  const [user, setUser] = React.useState({
     email: "",
     password: "",
     username: "",
   });
 
   const onSignup = async () => {
-    console.log("Signup clicked!", user);
+    // Signup logic here
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-black text-white px-4">
-      <h1 className="text-3xl font-bold mb-6">Signup</h1>
+    <div className="flex items-center justify-center min-h-screen bg-black text-white">
+      {/* Form Container with Border Beam Effect */}
+      <Card className="relative w-[350px] p-6 overflow-hidden">
+        <BorderBeam duration={8} size={100} /> {/* Beam only on the form */}
+        <CardHeader>
+          <CardTitle className="text-center text-xl font-bold">Signup</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form className="flex flex-col space-y-4">
+            <div className="flex flex-col">
+              <Label htmlFor="username">Username</Label>
+              <Input
+                id="username"
+                type="text"
+                value={user.username}
+                onChange={(e) => setUser({ ...user, username: e.target.value })}
+                placeholder="Enter username"
+                className="mt-2 p-2 rounded-md text-black"
+              />
+            </div>
 
-      <div className="w-full max-w-sm bg-gray-800 p-6 rounded-lg shadow-lg">
-        <label className="block text-lg mb-1" htmlFor="username">
-          Username
-        </label>
-        <input
-          id="username"
-          type="text"
-          className="w-full p-2 mb-4 rounded-md text-black"
-          placeholder="Enter username"
-          value={user.username}
-          onChange={(e) => setUser({ ...user, username: e.target.value })}
-        />
+            <div className="flex flex-col">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                value={user.email}
+                onChange={(e) => setUser({ ...user, email: e.target.value })}
+                placeholder="Enter email"
+                className="mt-2 p-2 rounded-md text-black"
+              />
+            </div>
 
-        <label className="block text-lg mb-1" htmlFor="email">
-          Email
-        </label>
-        <input
-          id="email"
-          type="email"
-          className="w-full p-2 mb-4 rounded-md text-black"
-          placeholder="Enter email"
-          value={user.email}
-          onChange={(e) => setUser({ ...user, email: e.target.value })}
-        />
+            <div className="flex flex-col">
+              <Label htmlFor="password">Password</Label>
+              <Input
+                id="password"
+                type="password"
+                value={user.password}
+                onChange={(e) => setUser({ ...user, password: e.target.value })}
+                placeholder="Enter password"
+                className="mt-2 p-2 rounded-md text-black"
+              />
+            </div>
 
-        <label className="block text-lg mb-1" htmlFor="password">
-          Password
-        </label>
-        <input
-          id="password"
-          type="password"
-          className="w-full p-2 mb-6 rounded-md text-black"
-          placeholder="Enter password"
-          value={user.password}
-          onChange={(e) => setUser({ ...user, password: e.target.value })}
-        />
-
-        <button
-          onClick={onSignup}
-          className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-md transition"
-        >
-          Sign Up
-        </button>
-        <p className="mt-4 text-center text-gray-300">
-          Already have an account?{" "}
+            <Button onClick={onSignup} className="w-full bg-blue-600 hover:bg-blue-700">
+              Signup
+            </Button>
+          </form>
+        </CardContent>
+        <CardFooter className="flex justify-center">
           <Link href="/login" className="text-blue-400 hover:underline">
-            Login here
+            Already have an account? Login here.
           </Link>
-        </p>
-      </div>
+        </CardFooter>
+      </Card>
     </div>
   );
 }
